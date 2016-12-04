@@ -1,0 +1,2 @@
+$(dirname "$0")/run-setup
+export NIX_REMOTE_SYSTEMS=$PWD/remote-systems.conf
