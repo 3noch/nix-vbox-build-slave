@@ -1,1 +1,2 @@
+#!/usr/bin/env bash
 nix-shell -p jq -p nixops --run "$(dirname "$0")/setup-script.sh"

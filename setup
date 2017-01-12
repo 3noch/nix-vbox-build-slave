@@ -1,2 +1,3 @@
-$(dirname "$0")/run-setup
+#!/usr/bin/env bash
+"$(dirname "$0")/run-setup"
 export NIX_REMOTE_SYSTEMS=$PWD/remote-systems.conf

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 here=$(dirname "$0")
 
@@ -31,9 +31,10 @@ echo "****** >> Found IP of build slave: $ip"
 
 private_key_file=$(get_abs_filename "${deployment}.id_rsa")
 
-rm -f "$private_key_file" 
+# Extract the SSH private key from the deployment state.
+rm -f "$private_key_file"
 nixops export -d "$deployment" | jq ".[keys[0]].resources.\"$machine_name\".\"virtualbox.clientPrivateKey\"" --raw-output > "$private_key_file"
-chmod 0400 "$private_key_file"
+chmod 400 "$private_key_file"
 echo "****** >> Copied private SSH key to build-slave to $private_key_file"
 
 conf_file=$(get_abs_filename "remote-systems.conf")
