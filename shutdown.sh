@@ -7,7 +7,7 @@ command -v nix-shell >/dev/null 2>&1 || {
     source "$nix_profile"
   else
     >&2 echo "Failed to find 'nix-shell' on PATH or a Nix profile to load. Have you installed Nix?"
-    exit 1  
+    exit 1
   fi
 }
 

@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
+unset NIX_REMOTE_SYSTEMS
 here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-conf_file="$HOME/nix-build-slave-vbox-remote.conf"
+
+conf_dir="$HOME/.nixos-build-slave"
+mkdir -p "$conf_dir"
+conf_file="$conf_dir/nix-build-slave-vbox-remote.conf"
+
 bash "$here/setup.sh" "$conf_file"
+
 export NIX_REMOTE_SYSTEMS="$conf_file"

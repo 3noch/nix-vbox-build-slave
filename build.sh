@@ -1,20 +1,19 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Expect a desired path to the conf file to be provided.
-conf_file_arg="$1"
+conf_file="$1"
+conf_dir=$(dirname "$conf_file")
 
 here=$(dirname "$0")
 
 deployment="build-slave-vbox"
 machine_name="build-slave"
 
-get_abs_filename() {
-  # $1 : relative filename
-  echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
-}
+private_key_file="$conf_dir/nix-${deployment}.ssh-id"
 
-private_key_file=$(get_abs_filename "nix-${deployment}.ssh-id")
-
+export NIX_PATH=nixpkgs=https://nixos.org/channels/nixos-16.09/nixexprs.tar.xz  # Use stable channel
 export NIXOPS_DEPLOYMENT="$deployment"
 
 get_deployment_ip() {
@@ -23,7 +22,7 @@ get_deployment_ip() {
 
 if nixops info --no-eval; then
   # Deployment exists, but reset IP addresses in ~/.ssh/known_hosts: https://github.com/NixOS/nixops/issues/286
-  echo "Deployment already created."  
+  echo "Deployment already created."
   ip="$(get_deployment_ip)"
 
   # Do a sanity check to make sure the IP is valid before touching ~/.ssh/known_hosts.
@@ -49,7 +48,6 @@ nixops export | jq ".[keys[0]].resources.\"$machine_name\".\"virtualbox.clientPr
 chmod 400 "$private_key_file"
 echo "****** >> Copied private SSH key to build-slave to $private_key_file"
 
-conf_file=$(get_abs_filename "$conf_file_arg")
 cat <<CONF > "$conf_file"
 root@$ip x86_64-linux "$private_key_file" 1 1
 CONF

@@ -18,4 +18,14 @@ To shut-down the build-slave, run `. ./shutdown` which will turn off the VM and 
 
 ## Troubleshooting
 
-**`nixops` can't connect to the virtual machine via SSH.** It's not uncommon for VirtualBox to assign a new IP to virtual machines after they've been rebooted, etc. When this happens, `nixops` often tries to connect with the old IP and fails. (If you've deployed another virtual machine since then, it may have stolen the old IP. In this case `nixops` may complain that the SSH keys are not correct.) This is a [known issue](https://github.com/NixOS/nixops/issues/583) in `nixops`. The fix is to remove the old IPs from your `~/.ssh/known_hosts` file and try the task again.
+**`nixops` can't connect to the virtual machine via SSH.** (Note that the `setup` script attempts to mitigate this problem.) It's not uncommon for VirtualBox to assign a new IP to virtual machines after they've been rebooted, etc. When this happens, `nixops` often tries to connect with the old IP and fails. (If you've deployed another virtual machine since then, it may have stolen the old IP. In this case `nixops` may complain that the SSH keys are not correct.) This is a [known issue](https://github.com/NixOS/nixops/issues/583) in `nixops`. The fix is to remove the old IPs from your `~/.ssh/known_hosts` file and try the task again.
+
+**The scripts stopped working completely.** This can happen if you did a major update to VirtualBox or modified/deleted the VirtualBox machine associated with the build-slave. You can use nixops to start everything from scratch:
+
+```shell
+nix-shell -p nixops  # Start a shell with nixops in the PATH
+nixops destroy -d build-slave-vbox
+nixops delete -d build-slave-vbox
+```
+
+Now you should be able to run the scripts and have everything start fresh.
