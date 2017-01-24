@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
-"$(dirname "$0")/run-setup"
-export NIX_REMOTE_SYSTEMS=$PWD/remote-systems.conf
+here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+conf_file="$HOME/nix-build-slave-vbox-remote.conf"
+bash "$here/setup.sh" "$conf_file"
+export NIX_REMOTE_SYSTEMS="$conf_file"

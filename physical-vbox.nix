@@ -18,7 +18,8 @@ let
   machineTemplate = memoryGb: {
     deployment.targetEnv = "virtualbox";
     deployment.virtualbox = {
-      memorySize = 1024 * memoryGb;
+      headless              = true;
+      memorySize            = 1024 * memoryGb;
       disks.disk1.baseImage = baseImage;
     };
   };
