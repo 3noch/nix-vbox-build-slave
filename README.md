@@ -1,7 +1,20 @@
 Quickly Create a VirtualBox Build-Slave for Nix
 ===============================================
 
-This repository provides a script that can be used to very easily create a [NixOS](https://nixos.org/) build slave for your needs. This is extremely useful where you're trying to deploy to a NixOS system from a non-NixOS host (e.g. using [NixOps](https://nixos.org/nixops/) on macOS).
+### Before Proceeding: A Better Way
+
+The technique used by this repo works pretty well, but if you are able to install [Docker](https://www.docker.com/) you can get a NixOS build slave much more easily with [this script](https://github.com/LnL7/nix-docker/blob/master/start-docker-nix-build-slave). Just run:
+
+```bash
+source <(curl -fsSL https://raw.githubusercontent.com/LnL7/nix-docker/master/start-docker-nix-build-slave)
+```
+
+Note that this does not work on Windows.
+
+
+### If You Don't Want to Use Docker
+
+This repository provides a script that can be used to easily create a [NixOS](https://nixos.org/) build slave for your needs depending only on Nix and VirtualBox. This is useful where you're trying to deploy to a NixOS system from a non-NixOS host (e.g. using [NixOps](https://nixos.org/nixops/) on macOS).
 
 **Prerequisites:** You are not running on Windows and have [VirtualBox](https://www.virtualbox.org/) installed.
 
